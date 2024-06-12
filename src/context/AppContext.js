@@ -57,6 +57,28 @@ export const AppReducer = (state, action) => {
                 ...state,
                 budget
             };
+            case 'DELETE_EXPENSE_10':
+                const updatedExpenses = state.expenses.map((currentExp) => {
+                    if (currentExp.name === action.payload.name) {
+                        // Уменьшаем затраты на 10
+                        const newCost = currentExp.cost - action.payload.cost;
+                        console.log(currentExp.cost)
+                        console.log(action.payload.cost)
+                        // Проверяем, чтобы не уйти в отрицательные значения
+                        if (newCost >= 0) {
+                            currentExp.cost = newCost;
+                        } else {
+                            alert("Cannot decrease the expense value! It would be negative.");
+                        }
+                    }
+                    return currentExp;
+                });
+
+                // После обновления статей расходов
+                return {
+                    ...state,
+                    expenses: updatedExpenses,
+                };
         case 'SET_BUDGET':
             action.type = "DONE";
             state.budget = action.payload;
@@ -69,7 +91,7 @@ export const AppReducer = (state, action) => {
             state.currency = action.payload;
             return {
                 ...state
-            }
+            };
 
         default:
             return state;
@@ -86,7 +108,7 @@ const initialState = {
         { id: "Human Resource", name: 'Human Resource', cost: 40 },
         { id: "IT", name: 'IT', cost: 500 },
     ],
-    currency: '£'
+    currency: '$ Dollar"'
 };
 
 // 2. Creates the context this is the thing our components import and use to get the state
@@ -103,7 +125,7 @@ export const AppProvider = (props) => {
             const totalExpenses = state.expenses.reduce((total, item) => {
             return (total = total + item.cost);
         }, 0);
-        remaining = state.budget - totalExpenses;
+        remaining = initialState.budget - totalExpenses;
     }
 
     return (
