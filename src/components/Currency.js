@@ -18,27 +18,44 @@ const Currency = (props) => {
     <div className='row'>
         <style>
             {`
-                option:hover {
-                background-color: yellow;
+                .input-g {
+                    display: flex;
+                    align-items: center;
+                    background-color: lightgreen;
+                    padding: 15px;
+                    margin-left: 10px;
+                    margin-right: 150px;
+                    display: inline-block;
+                    color: white;
                 }
-
+                .currancy {
+                    display: flex;
+                    align-items: center;
+                    background-color: lightgreen;
+                    display: inline-block;
+                    color: white;
+                }
+                .option {
+                    display: flex;
+                    align-items: center;
+                    background-color: lightgreen;
+                    display: inline-block;
+                    color: black;
+                }
+                option:checked,
+                option:hover {
+                    background-color: white;
+                }
             `}
         </style>
         <div className="input-g">
             <label htmlFor="currency" >Currency:</label>
-            <select onfocus='this.size=10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="opel">Opel</option>
-                <option value="audi">Audi</option>
-            </select>
-
-            {/* <select id="currency"  value={value} onChange={handleCurrencyChange} onfocus='this.size=10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
+            <select id="currency"  value={value} onChange={handleCurrencyChange} onfocus='this.size=10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
                 <option defaultValue value="$ Dollar" name="Dollar" >$ Dollar</option>
                 <option value="£ Pound" name="Pound" >£ Pound</option>
                 <option value="€ Euro" name="Euro" >€ Euro</option>
                 <option value="₹ Ruppee" name="Ruppee" >₹ Ruppee</option>
-            </select> */}
+            </select>
         </div>
     </div>
 </div>
