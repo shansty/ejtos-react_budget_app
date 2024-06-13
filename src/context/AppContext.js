@@ -30,7 +30,7 @@ export const AppReducer = (state, action) => {
                     ...state
                 }
             }
-            case 'RED_EXPENSE':
+        case 'RED_EXPENSE':
                 const red_expenses = state.expenses.map((currentExp)=> {
                     if (currentExp.name === action.payload.name && currentExp.cost - action.payload.cost >= 0) {
                         currentExp.cost =  currentExp.cost - action.payload.cost;
@@ -43,7 +43,7 @@ export const AppReducer = (state, action) => {
                     ...state,
                     expenses: [...red_expenses],
                 };
-            case 'DELETE_EXPENSE':
+        case 'DELETE_EXPENSE':
             action.type = "DONE";
             state.expenses.map((currentExp)=> {
                 if (currentExp.name === action.payload) {
@@ -57,13 +57,11 @@ export const AppReducer = (state, action) => {
                 ...state,
                 budget
             };
-            case 'DELETE_EXPENSE_10':
+        case 'DELETE_EXPENSE_10':
                 const updatedExpenses = state.expenses.map((currentExp) => {
                     if (currentExp.name === action.payload.name) {
                         // Уменьшаем затраты на 10
                         const newCost = currentExp.cost - action.payload.cost;
-                        console.log(currentExp.cost)
-                        console.log(action.payload.cost)
                         // Проверяем, чтобы не уйти в отрицательные значения
                         if (newCost >= 0) {
                             currentExp.cost = newCost;
@@ -73,7 +71,7 @@ export const AppReducer = (state, action) => {
                     }
                     return currentExp;
                 });
-
+                action.type = "DONE";
                 // После обновления статей расходов
                 return {
                     ...state,

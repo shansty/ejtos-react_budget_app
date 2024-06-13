@@ -9,7 +9,7 @@ const ExpenseItem = (props) => {
     const handleDeleteExpense = (name) => {
         const expense = {
             name: name,
-            cost: 5,
+            cost: 10,
         };
 
         dispatch({

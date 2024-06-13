@@ -1,65 +1,55 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import Select from 'react-select';
 
 const Currency = (props) => {
     let { dispatch } = useContext(AppContext);
-    const [value, setValue] = useState("$ Dollar");
+    const [value, setValue] = useState({ value: '$ Dollar', label: 'Currency ($ Dollar)' }); // Установка значения по умолчанию
 
-    const handleCurrencyChange = (event) => {
+    const handleCurrencyChange = (selectedOption) => {
+        setValue({value: selectedOption.value, label: `Currency (${selectedOption.label})`}); // Обновление выбранного значения
+        console.dir(selectedOption);
         dispatch({
             type: 'CHG_CURRENCY',
-            payload: event.target.value,
+            payload: selectedOption.value,
         });
-        setValue(event.target.value);
-      };
+    };
+
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: 'lightgreen',
+            padding: "10px",
+            color: "white",
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: "white",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused ? 'white' : 'lightgreen',
+            color: state.isFocused ? '#333' : '#000',
+        }),
+    };
+
+    const options = [
+        { value: '$ Dollar', label: '$ Dollar' },
+        { value: '£ Pound', label: '£ Pound' },
+        { value: '€ Euro', label: '€ Euro' },
+        { value: '₹ Ruppee', label: '₹ Ruppee' },
+    ];
 
     return (
         <div>
-    <div className='row'>
-        <style>
-            {`
-                .input-g {
-                    display: flex;
-                    align-items: center;
-                    background-color: lightgreen;
-                    padding: 15px;
-                    margin-left: 10px;
-                    margin-right: 150px;
-                    display: inline-block;
-                    color: white;
-                }
-                .currancy {
-                    display: flex;
-                    align-items: center;
-                    background-color: lightgreen;
-                    display: inline-block;
-                    color: white;
-                }
-                .option {
-                    display: flex;
-                    align-items: center;
-                    background-color: lightgreen;
-                    display: inline-block;
-                    color: black;
-                }
-                option:checked,
-                option:hover {
-                    background-color: white;
-                }
-            `}
-        </style>
-        <div className="input-g">
-            <label htmlFor="currency" >Currency:</label>
-            <select id="currency"  value={value} onChange={handleCurrencyChange} onfocus='this.size=10;' onblur='this.size=0;' onchange='this.size=1; this.blur();'>
-                <option defaultValue value="$ Dollar" name="Dollar" >$ Dollar</option>
-                <option value="£ Pound" name="Pound" >£ Pound</option>
-                <option value="€ Euro" name="Euro" >€ Euro</option>
-                <option value="₹ Ruppee" name="Ruppee" >₹ Ruppee</option>
-            </select>
+            <Select
+                styles={customStyles}
+                options={options}
+                onChange={handleCurrencyChange}
+                value={value}
+            />
         </div>
-    </div>
-</div>
-    )};
-
+    );
+};
 
 export default Currency;
